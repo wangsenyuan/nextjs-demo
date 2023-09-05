@@ -1,14 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useChat } from "ai/react";
 
-export default function Page() {
-  const [count, setCount] = useState(0);
+export default function Chat() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
     <div>
-      <div>You clicked {count} times</div>
-      <button onClick={() => setCount(count + 1)}>Click</button>
+      {messages.map((m) => (
+        <div key={m.id}>
+          {m.role}: {m.content}
+        </div>
+      ))}
+
+      <form onSubmit={handleSubmit}>
+        <input
+          value={input}
+          placeholder="Say something..."
+          onChange={handleInputChange}
+        />
+      </form>
     </div>
   );
 }
